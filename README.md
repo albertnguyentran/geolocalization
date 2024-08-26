@@ -1,0 +1,1 @@
+## Image geolocalization prediction model
