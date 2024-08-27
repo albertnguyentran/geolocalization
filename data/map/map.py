@@ -16,7 +16,15 @@ class Map:
             for j in range(0, 180, 12):
                 self.segments[(i, j)] = []
 
-test_map = Map()
+    def overlayMap(self):
+        pass
 
-for key, _ in test_map.segments.items():
-    print(key)
+
+def main():
+    test_map = Map()
+
+    for key, _ in test_map.segments.items():
+        print(key)
+
+if __name__ == "__main__":
+    main()
