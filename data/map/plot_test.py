@@ -31,9 +31,9 @@ import plotly.graph_objects as go
 # (topleft, bottomleft, bottomright, topright, topleft)
 
 coords = []
-for i in range(90, -60, -12):
-    for j in range(-180, 180, 12):
-        coords.append([(j, j, j+12, j+12, j), (i, i-12, i-12, i, i)])
+for i in range(90, -66, -6):
+    for j in range(-180, 180, 6):
+        coords.append([(j, j, j+6, j+6, j), (i, i-6, i-6, i, i)])
 
 # for c in coords:
 #     print(c)
@@ -43,11 +43,8 @@ for i in range(90, -60, -12):
 #     [(100, 100, 80, 80, 100), (40, 50, 50, 40, 40)],
 # ]
 
-
-
+print(len(coords))
 fig = go.Figure()
-
-
 
 for lon, lat in coords:
     fig.add_trace(go.Scattergeo(
@@ -55,14 +52,12 @@ for lon, lat in coords:
         lat=lat,
         mode="lines",
         fill="toself",
-        marker=go.scattergeo.Marker(
-            line=dict(
-                color="MediumPurple",
-                width=8
-            ),
-            size=10,
-            color="#fff",
+        line=dict(
+            color="black",
+            width=8
         ),
+        fillcolor="rgba(255, 255, 255, 0)",
+        
         opacity=0.03
     ))
 
@@ -94,7 +89,7 @@ fig.update_geos(
 fig.update_layout(
     title = 'Segmented map',
     margin = {'l':0, 'r':0, 'b':0, 't':0},
-    mapbox_bounds=dict(west=-180, east=180, south=-60, north=90),
+    mapbox_bounds=dict(west=-180, east=180, south=-66, north=90),
     showlegend=False
 )
 # fig.update_layout(
