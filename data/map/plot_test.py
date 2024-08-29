@@ -33,15 +33,23 @@ import plotly.graph_objects as go
 coords = []
 for i in range(90, -66, -6):
     for j in range(-180, 180, 6):
-        coords.append([(j, j, j+6, j+6, j), (i, i-6, i-6, i, i)])
+        coords.append([(j, j+6, j+6, j, j), (i, i, i-6, i-6, i)])
 
 # for c in coords:
 #     print(c)
+
+# (topleft, topright, bottomright, bottomleft, topleft)
 # coords = [
-#     [(-10, -10, 8, 8, -10), (30, 6, 6, 30, 30)],
-#     [(30, 30, 50, 50, 30), (20, 30, 30, 20, 20)],
-#     [(100, 100, 80, 80, 100), (40, 50, 50, 40, 40)],
+#     [(-10, -10, 8, 8, -10), (30, 6, 6, 30, 30), "rgba(255, 0, 0, 1)"],
+#     [(100, 100, 80, 80, 100), (40, 50, 50, 40, 40), "rgba(0, 0, 255, 1)"],
 # ]
+
+colors = ["rgba(0, 0, 255, 0.5)", "rgba(0, 255, 0, 0.5)", "rgba(255, 0, 0, 0.5)"]
+# colors = ["rgba(0, 0, 255, 0.5)"]
+
+print(coords)
+
+import random
 
 print(len(coords))
 fig = go.Figure()
@@ -56,9 +64,8 @@ for lon, lat in coords:
             color="black",
             width=8
         ),
-        fillcolor="rgba(255, 255, 255, 0)",
-        
-        opacity=0.03
+        fillcolor=random.choice(colors),
+        opacity=0.5
     ))
 
 fig.update_geos(
