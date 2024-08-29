@@ -23,54 +23,30 @@ class Map:
         lon_segment = -180 + (lon + 180) // 6 * 6
         return (lon_segment, lat_segment)
     
+    def prediction_to_colour(self, segment):
+        return "rgb(255, 255, 255)"
+    
     def segmentMap(self):
-        # for i in range(90, -66, -6):
-        #     for j in range(-180, 180, 6):
-        #         self.prediction[self.get_segment(j, i)] = 0
-        #         lon, lat = (j, j, j+6, j+6, j), (i, i-6, i-6, i, i)
-        #         self.fig_coords.append([lon, lat])
+        for i in range(90, -66, -6):
+            for j in range(-180, 180, 6):
+                self.prediction[self.get_segment(j, i)] = 0
+                lon, lat = (j, j+6, j+6, j, j), (i, i, i-6, i-6, i)
+                self.fig_coords.append([lon, lat])
 
-        #         if sum(self.get_segment(j, i)):
-        #             print('here')
-        #             p = f"rgba(255, 0, 0, 0.1)"
-        #         else:
-        #             print('-')
-        #             p = f"rgba(0, 0, 255, 0)"
+                self.fig.add_trace(go.Scattergeo(
+                    lon=lon,
+                    lat=lat,
+                    mode="lines+markers+text",
+                    fill="toself",
+                    line=dict(
+                        color="black",
+                        width=1
+                    ),
+                    fillcolor="rgb(255, 255, 255)",
+                    opacity=0.5
+                ))
+                self.segment_count += 1
 
-        #         self.fig.add_trace(go.Scattergeo(
-        #             lon=lon,
-        #             lat=lat,
-        #             mode="lines+markers+text",
-        #             fill="toself",
-        #             line=dict(
-        #                 color="black",
-        #                 width=8
-        #             ),
-        #             marker=go.scattergeo.Marker(
-        #                 color=p
-        #             ),
-        #             fillcolor=p,
-        #             opacity=0.03
-        #         ))
-        #         self.segment_count += 1
-
-        coords = [
-            [(0, 0, 10, 10, 0), (10, 0, 0, 10, 10), "blue"],
-            [(30, 30, 50, 50, 30), (20, 30, 30, 20, 20), "red"],
-        ]
-
-
-        for lon, lat, c in coords:
-            self.fig.add_trace(go.Scattergeo(
-                lon=lon[::-1],
-                lat=lat[::-1],
-                mode="lines",
-                fill="toself",
-                fillcolor=c,
-                opacity=0.5,
-                connectgaps=False,
-                name="A %s" % lon[0]
-            ))
     
     def configureMap(self):
         self.fig.update_geos(
@@ -89,6 +65,9 @@ class Map:
             mapbox_bounds=dict(west=-180, east=180, south=-66, north=90),
             showlegend=False
         )
+
+        # just update the map by recreating all segments
+        self.fig.update_traces(selector=dict(ze1="a"))
     
     def displayMap(self):
         self.fig.show()

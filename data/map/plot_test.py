@@ -44,7 +44,7 @@ for i in range(90, -66, -6):
 #     [(100, 100, 80, 80, 100), (40, 50, 50, 40, 40), "rgba(0, 0, 255, 1)"],
 # ]
 
-colors = ["rgba(0, 0, 255, 0.5)", "rgba(0, 255, 0, 0.5)", "rgba(255, 0, 0, 0.5)"]
+colors = ["rgba(255, 0, 0, 1)", "rgba(254, 77, 77, 1)" ]
 # colors = ["rgba(0, 0, 255, 0.5)"]
 
 print(coords)
@@ -62,7 +62,7 @@ for lon, lat in coords:
         fill="toself",
         line=dict(
             color="black",
-            width=8
+            width=1
         ),
         fillcolor=random.choice(colors),
         opacity=0.5
