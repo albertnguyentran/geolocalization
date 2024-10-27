@@ -27,12 +27,16 @@ class Map:
         return "rgb(255, 255, 255)"
     
     def segmentMap(self):
+        id = 0
+        ids = {1102, 1042}
+        ids2 = {508, 918}
+
         for i in range(90, -66, -6):
             for j in range(-180, 180, 6):
                 self.prediction[self.get_segment(j, i)] = 0
                 lon, lat = (j, j+6, j+6, j, j), (i, i, i-6, i-6, i)
                 self.fig_coords.append([lon, lat])
-
+    
                 self.fig.add_trace(go.Scattergeo(
                     lon=lon,
                     lat=lat,
@@ -46,6 +50,7 @@ class Map:
                     opacity=0.5
                 ))
                 self.segment_count += 1
+                id += 1
 
     
     def configureMap(self):
