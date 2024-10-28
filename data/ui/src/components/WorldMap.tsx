@@ -55,17 +55,18 @@ const WorldMap = () => {
         automargin: true,
         text: 'Segmented Map',
         pad: {
-            b: -1000,
-            t: 300
+            b: 0,
+            t: 0
         },
         font: {
             size: 30
         },
     },
+    autosize: false,
     width: 1500,
-    height: 1500,
-    margin: { l: 0, r: 0, b: 0, t: -1000 },
-    padding: { l: 0, r: 0, b: 0, t: -1000 },
+    height: 750,
+    margin: { l: 0, r: 0, b: 0, t: 0 },
+    padding: { l: 0, r: 0, b: 0, t: 0 },
     geo: {
       resolution: 50,
       projection: {
@@ -117,6 +118,14 @@ const WorldMap = () => {
           config={{ responsive: true, scrollZoom: false, displayModeBar: false }}
           onClick={handleClick}
         />
+      </div>
+
+      <div>
+        <ul>
+            {Array.from(selectedSegments).map(segment => 
+                <li style={{fontSize: 30, color: 'black'}}>{segment}</li>
+            )}
+        </ul>
       </div>
      
     </div>

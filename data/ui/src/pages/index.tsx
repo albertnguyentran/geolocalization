@@ -7,7 +7,7 @@ import WorldMap from "@/components/WorldMap";
 export default function Home() {
   return (
     <>
-      <div style={{height: '100vh', width: '100%', background: 'white', padding: '50px', display: 'flex', flexDirection: 'column', gap: '20px'}}>
+      <div style={{height: '100vh', overflow: 'hidden', width: '100%', background: 'white', padding: '50px', display: 'flex', flexDirection: 'column', gap: '20px'}}>
         <h1 style={{color: 'black'}}>
           Dataset Creator Tool
         </h1>

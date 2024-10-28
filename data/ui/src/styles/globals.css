@@ -16,8 +16,13 @@ body {
   overflow-x: hidden;
 }
 
+#__next {
+  background: white;
+  min-height: 100vh;
+}
+
 body {
-  color: var(--foreground);
+  background: white;
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
