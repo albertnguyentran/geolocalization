@@ -14,5 +14,3 @@ image = requests.get(image_url)
 
 # print(dir(image))
 print(image.content)
-
-sg

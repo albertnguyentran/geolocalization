@@ -15,7 +15,7 @@ def get_image(fov, heading, pitch, width, height):
     # 854x480   (480p)
     # 1280x720  (720p)
     # 1920x1080 (1080p - note: API might have size limits)
-    
+
     heading: compass heading camera (0, 360)
     - for each image, take 2/4 different headings
     fov: field of view (default of 90), doesnt change how much you see
