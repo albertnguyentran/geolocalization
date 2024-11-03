@@ -1,11 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 const Plot = dynamic(() => import('react-plotly.js'), {
   ssr: false,
-  loading: () => <div style={{color: 'orange'}}>Loading map...</div>
+  // loading: () => <div style={{color: 'orange'}}>Loading map...</div>
 });
 
+const URL = 'http://localhost:5000'
 interface MapSegment {
   id: string;
   lon: number[];
@@ -13,23 +14,48 @@ interface MapSegment {
   selected: boolean;
 }
 
-const WorldMap = () => {
+const WorldMap = ({width, height, reset, exportData}: {width: number, height: number, reset: boolean, exportData: boolean}) => {
   const [selectedSegments, setSelectedSegments] = useState<Set<string>>(new Set());
+  
+  const exportSegmentData = async () => {
+    try {
+      const response = await fetch(`${URL}/api/export`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+      });
 
+      if (response.ok) {
+
+      }
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  useEffect(() => {
+    setSelectedSegments(new Set())
+  }, [reset])
+
+  useEffect(() => {
+    exportSegmentData()
+  }, [exportData])
   const segments = useMemo(() => {
     const segs: MapSegment[] = [];
-    for (let i = 90; i > -90; i -= 6) {
-      for (let j = -180; j < 180; j += 6) {
+    for (let i = 90; i > -90; i -= height) {
+      for (let j = -180; j < 180; j += width) {
         segs.push({
           id: `${i},${j}`,
-          lon: [j, j + 6, j + 6, j, j],
-          lat: [i, i, i - 6, i - 6, i],
+          lon: [j, j + width, j + width, j, j],
+          lat: [i, i, i - height, i - height, i],
           selected: false
         });
       }
     }
     return segs;
-  }, []);
+  }, [width, height]);
 
   const generateMapData = () => {
     return segments.map((segment) => ({
@@ -51,19 +77,19 @@ const WorldMap = () => {
   };
 
   const layout = {
-    title: {
-        automargin: true,
-        text: 'Segmented Map',
-        pad: {
-            b: 0,
-            t: 0
-        },
-        font: {
-            size: 30
-        },
-    },
-    autosize: false,
-    width: 1500,
+    // title: {
+    //     automargin: true,
+    //     text: 'Segmented Map',
+    //     pad: {
+    //         b: 0,
+    //         t: 0
+    //     },
+    //     font: {
+    //         size: 30
+    //     },
+    // },
+    autosize: true,
+    // width: 1500,
     height: 750,
     margin: { l: 0, r: 0, b: 0, t: 0 },
     padding: { l: 0, r: 0, b: 0, t: 0 },
@@ -108,8 +134,8 @@ const WorldMap = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div style={{display: 'flex', flexDirection: 'row'}}>
+      <div style={{ width: '75%', height: '850px', borderRight: '1px solid black', padding: '50px 0 50px 0'}}>
         <Plot
           data={generateMapData()}
           layout={layout}
@@ -121,9 +147,9 @@ const WorldMap = () => {
       </div>
 
       <div>
-        <ul>
-            {Array.from(selectedSegments).map(segment => 
-                <li style={{fontSize: 30, color: 'black'}}>{segment}</li>
+        <ul style={{padding: '50px', display: 'flex', flexDirection: 'column', flexWrap: 'wrap', height: '850px'}}>
+            {Array.from(selectedSegments).map((segment, i) => 
+                <li key={i} style={{fontSize: 30, color: 'black', marginRight: '35px'}}>{segment}</li>
             )}
         </ul>
       </div>
